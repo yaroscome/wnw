@@ -1,5 +1,8 @@
 package models;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,10 +46,19 @@ public class CatMenu {
         return disposalReason;
     }
     
-    public TreeNode loadCustomCatMenu(String fileName) {
-        return null;
+    public void loadCustomCatMenu(String filename) {
+        List list = new ArrayList<String>();
+        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
+            while (scanner.hasNext()){
+                list.add(scanner.next());
+                System.out.println("Read line");
+            }
+        }catch (FileNotFoundException ex) {
+            System.out.println("File not found");
+            Logger.getLogger(CatMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+        
     public void save(String filename) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
             writer.println(root);

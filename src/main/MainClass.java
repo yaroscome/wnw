@@ -58,6 +58,15 @@ public class MainClass {
     
     private static void importCustomTree(CatMenu catMenu) {
         
+        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            System.out.print("filename: ");
+            String filename = keyboard.readLine();
+            catMenu.loadCustomCatMenu(filename);
+            
+        } catch(IOException e) {
+            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
     private static void selectPath(CatMenu catMenu) {
