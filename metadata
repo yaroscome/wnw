@@ -1,1 +1,1 @@
-[{ foodCategory:Meat }, { foodType:Lamb }, { disposalReason: overpreparation }]
+[{ foodCategory:Fish }, { foodType:Tuna }, { disposalReason: spoiled }]

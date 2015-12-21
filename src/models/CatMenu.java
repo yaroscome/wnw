@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,15 +48,59 @@ public class CatMenu {
     
     public void loadCustomCatMenu(String filename) {
         List list = new ArrayList<String>();
-        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
-            while (scanner.hasNext()){
-                list.add(scanner.next());
-                System.out.println("Read line");
-            }
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
+			String line = bufferedReader.readLine();
+			while(line != null) {
+				
+				line = line.replace("[", "");
+				line = line.replace("{", "");
+				line = line.replace("}", "");
+				line = line.replace("]", "");
+				line = line.replace(" ", "");
+				
+				TreeNode currentNode = root;
+				StringTokenizer tokenizer = new StringTokenizer(line, ":,");
+				
+				while(tokenizer.hasMoreElements()) {
+					String type = tokenizer.nextToken(); 
+					String value = tokenizer.nextToken();
+					if(tokenizer.countTokens() == 0) {
+						currentNode.getSubTree().put(value, new TreeNode(""));
+					} else {
+						ArrayList<String> keys = new ArrayList<String>(currentNode.getSubTree().keySet());
+						boolean notFound = true;
+						for(String k: keys) {
+							if(k.equals(value)) {
+								currentNode = currentNode.getSubTree().get(k);
+								notFound = false;
+								break;
+							}
+						}
+						
+						if(notFound) {
+							currentNode.getSubTree().put(value, new TreeNode(type, new HashMap<String, TreeNode>()));
+							currentNode = currentNode.getSubTree().get(value);
+						}
+						
+					}
+					
+					
+					
+					
+					
+				}
+				
+				line = bufferedReader.readLine();
+			}
+            
         }catch (FileNotFoundException ex) {
             System.out.println("File not found");
             Logger.getLogger(CatMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch(IOException ex) {
+			Logger.getLogger(CatMenu.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		System.out.println("done.");
     }
         
     public void save(String filename) {

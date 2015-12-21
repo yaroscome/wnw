@@ -26,11 +26,14 @@ public class MainClass {
          
        
         Gson gson = new Gson(); //GsonBuilder().serializeNulls().create();
-        String jsonTree = gson.toJson(catMenu.getRoot());
+        
         
         
         boolean keepRunning = true;
         do {
+			System.out.print("\n\n\n"); 
+			
+            System.out.println("0 - To stop");
             System.out.println("1 - Import cutom tree");
             System.out.println("2 - Export metadata (select path)");
             try {
@@ -38,8 +41,8 @@ public class MainClass {
                 int choice = Integer.parseInt(line);
                 
                 switch(choice) {
-                    case 1: importCustomTree(catMenu);
-                    case 2: selectPath(catMenu);
+                    case 1: importCustomTree(catMenu); break;
+                    case 2: selectPath(catMenu); break;
                     default: keepRunning = false;
                 }
                 
@@ -47,11 +50,12 @@ public class MainClass {
             } catch (IOException ex) { 
                 Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+            String jsonTree = gson.toJson(catMenu.getRoot());
+			System.out.println("JSON: " + jsonTree);
             
         } while(keepRunning);
         
-        System.out.println("JSON: " + jsonTree);
+		
         
     }
     
