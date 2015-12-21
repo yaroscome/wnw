@@ -52,6 +52,9 @@ public class MainClass {
             }
             String jsonTree = gson.toJson(catMenu.getRoot());
 			System.out.println("JSON: " + jsonTree);
+			
+			System.out.println("Exporting to file: rootexp.json");
+			catMenu.save("rootexp.json");
             
         } while(keepRunning);
         
